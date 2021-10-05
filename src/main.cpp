@@ -1,7 +1,9 @@
 #include <Arduino.h>
 #include <FastLED.h>
 #include <TMCStepper.h>
+#include <BleKeyboard.h>
 #include "FastLED_RGBW.h"
+
 
 //tmc stepper 
 #define EN_PIN    7  
@@ -17,13 +19,13 @@
 TMC2130Stepper driver(CS_PIN, R_SENSE, SW_MOSI, SW_MISO, SW_SCK);
 
 //button pin setup
-#define buttonR 
+#define buttonR 18
 #define redCH 0
-#define buttonG 
+#define buttonG 19
 #define greenCH 1
-#define buttonB
+#define buttonB 21
 #define blueCH 2
-#define buttonInput
+#define buttonInput 2
 
 #define freq 5000
 #define resolution 8
@@ -32,6 +34,8 @@ bool buttonPressed = false;
 //neopixel setup
 #define NUM_LEDS 100
 #define DATA_PIN 6
+//Bluetooth Control Setup
+BleKeyboard bleKeyboard;
 
 
 CRGBPalette16 currentPalette;
@@ -54,7 +58,7 @@ const uint8_t brightness = 255;
 
 
 
-//bluetooth setup
+
 
 
 
@@ -79,6 +83,9 @@ ledcAttachPin(buttonG,greenCH);
 ledcAttachPin(buttonB,blueCH);
 
 //steppers
+
+//bluetooth
+bleKeyboard.begin();
 
 
 runmain();
