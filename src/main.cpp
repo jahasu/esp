@@ -80,7 +80,12 @@ ledcSetup(blueCH, freq, resolution);
 ledcSetup(greenCH, freq, resolution);
 ledcAttachPin(buttonR,redCH);
 ledcAttachPin(buttonG,greenCH);
-ledcAttachPin(buttonB,blueCH);
+ledcAttachPin(buttonB,blueCH); 
+
+int pulse_i =0 ;
+bool pulse_dir = 0;
+
+
 
 //steppers
 
@@ -92,13 +97,26 @@ runmain();
 }
 
 void setRGB(int colour){
-  ledcWrite(redCH, 255);
+  ledcWrite(redCH, colour);
+  ledcWrite(greenCH, colour);
+  ledcWrite(blueCH, colour);
 }
   
-
 void buttonPulse(){
+    while(digitalRead(buttonInput)== 1){
+    setRGB(i);
+    if(pulse_i == 255 || pulse_i == 0){
+      pulse_dir =!pulse_dir;
+    }
+    if (pulse_dir == 0){
+      i--;
+    }
+    else{
+      i++;
+    }
+    delay(20);
 
-
+  }
 }
 void lightWave(){
 
@@ -114,11 +132,12 @@ int iPadMove(int ipadDir){
 
 
 
-void runmain(){
-  while(digitalRead(buttonInput)== 1){
-    buttonPulse();
 
-  }
+void runmain(){
+ 
+  
+  
+  buttonPulse():
   
   lightWave();
   lidMove(1); // 1 is open, 0 is closed  returns 1 if successful - will may need error catching LIMIT SWITCH?
